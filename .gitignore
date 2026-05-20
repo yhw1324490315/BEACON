@@ -1,0 +1,36 @@
+# Credentials & Environments
+config/secrets.env
+.env
+.env.*
+.venv/
+env/
+venv/
+ENV/
+
+# Large Datasets
+data/CID-SMILES
+
+# Local Execution Artifacts & Logs
+experiments/
+test_results/
+test_env_optimizer/
+*.log
+*.csv
+*.png
+*.svg
+
+# Python & IDE Caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*.swo

@@ -1,0 +1,127 @@
+project_name: "BEACON-Discovery"
+
+llm:
+  provider: "openai" # Options: "openai", "gemini"
+  
+  openai:
+    model_name: "gpt-5.4"
+    temperature: 0.1
+    base_url: "" # Your custom API endpoint, defaults to official endpoint if empty
+
+  # openai:
+  #   model_name: "gpt-4o-mini"
+  #   temperature: 0.1
+  #   base_url: "" 
+  
+  
+# Multi-model ablation experiment pool
+# When using --config model_ablation, the system runs full + no_scout comparisons for each model in sequence
+model_ablation_pool:
+  - alias: "gpt-5.4-nano"
+    model_name: "gpt-5.4-nano"
+    base_url: ""
+  - alias: "deepseek-v3.2"
+    model_name: "deepseek-v3.2"
+    base_url: ""
+  - alias: "gemini-3.1-flash-lite"
+    model_name: "gemini-3.1-flash-lite"
+    base_url: ""
+  - alias: "gpt-5.4-mini"
+    model_name: "gpt-5.4-mini"
+    base_url: ""
+  - alias: "gemini-3.1-pro"
+    model_name: "gemini-3.1-pro"
+    base_url: ""
+
+# Output path configurations
+output:
+  base_dir: "experiments" # Root directory for all experiment results
+  run_dir_format: "%Y-%m-%d_%H-%M-%S" # Subdirectory format for each run
+
+# Data file paths (relative to project root)
+data_paths:
+  # Feature importance files (SHAP)
+  life_importance: "data/Life_feature_importance.csv"
+  em_importance:   "data/EM_feature_importance.csv"
+  
+  # SHAP plots
+  life_shap: "data/Life_shap_summary_plot.png"
+  em_shap:   "data/EM_shap_summary_plot.png"
+  
+  # Experimental records (original full spreadsheet)
+  experiments: "data/CD_Data_Collection.xlsx"
+  
+  # Model training datasets
+  training_em: "data/Total_data_em.xlsx"
+  training_life: "data/Total_data_life.xlsx"
+  
+  # Raw SMILES modeling data
+  smiles_raw: "data/SMILES_Modeling_Data.xlsx"
+  cid_smiles: "data/CID-SMILES"
+
+# Model pickle paths
+model_paths:
+  em_model: "data/trained_em_model.pkl"
+  life_model: "data/trained_life_model.pkl"
+
+# Agent parameters
+agents:
+  planner:
+    max_retries: 3
+    molecule_search_limit: 60000
+    molecule_max_mw: 500
+
+# Critic Agent reviewer configurations
+# Each judge can be configured independently (Poe, official OpenAI, official Gemini, etc.)
+# api_key_env: Env variable name, loaded from secrets.env
+# base_url: Custom API endpoint (leave empty for official defaults)
+critic:
+  judges:
+    - name: "gemini-3.1-pro"
+      provider: "openai"  # OpenAI-compatible API interface
+      model: "gemini-3.1-pro"
+      api_key_env: "OPENAI_API_KEY"
+      base_url: ""
+      temperature: 0.1
+      
+    - name: "gpt-5.4"
+      provider: "openai"
+      model: "gpt-5.4"
+      api_key_env: "OPENAI_API_KEY"  
+      base_url: ""  
+      temperature: 0.1
+      
+    - name: "claude-opus-4.6"
+      provider: "openai"
+      model: "claude-opus-4.6"
+      api_key_env: "OPENAI_API_KEY"
+      base_url: ""
+      temperature: 0.1
+      
+    - name: "grok-4.1-fast-reasoning"
+      provider: "openai"
+      model: "grok-4.1-fast-reasoning"
+      api_key_env: "OPENAI_API_KEY"
+      base_url: ""
+      temperature: 0.1
+      
+    - name: "kimi-k2.5"
+      provider: "openai"
+      model: "kimi-k2.5"
+      api_key_env: "OPENAI_API_KEY"
+      base_url: ""
+      temperature: 0.1
+      
+    - name: "qwen3.5-plus"
+      provider: "openai"
+      model: "qwen3.5-plus"
+      api_key_env: "OPENAI_API_KEY"
+      base_url: ""
+      temperature: 0.1
+      
+    - name: "deepseek-v3.2"
+      provider: "openai"
+      model: "deepseek-v3.2"
+      api_key_env: "OPENAI_API_KEY"
+      base_url: ""
+      temperature: 0.1
